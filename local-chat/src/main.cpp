@@ -29,6 +29,20 @@ unsigned long lastWiFiCheck = 0;
 bool lastButtonState = HIGH;
 unsigned long lastPressTime = 0;
 
+void blinkModeIndicator(uint8_t blinkCount)
+{
+  for (uint8_t i = 0; i < blinkCount; i++)
+  {
+    digitalWrite(LED_PIN, HIGH);
+    delay(120);
+    digitalWrite(LED_PIN, LOW);
+    if (i < blinkCount - 1)
+    {
+      delay(120);
+    }
+  }
+}
+
 String sanitizeChatText(const String &input, size_t maxLen, bool isName)
 {
   String out = "";
@@ -162,7 +176,6 @@ void handleWebSocketMessage(void *arg, uint8_t *data, size_t len, AsyncWebSocket
 
   ws.textAll(finalMsg);
 
-  // Bật đèn báo hiệu
   digitalWrite(LED_PIN, HIGH);
   ledTurnedOnAt = millis();
   isLedOn = true;
@@ -234,6 +247,8 @@ void applyWiFiMode()
       Serial.println("\nfailed to connect, double check credentials!");
     }
   }
+
+  blinkModeIndicator(isAPMode ? 1 : 3);
 }
 
 // ==========================================
@@ -264,7 +279,7 @@ void setup()
 // ==========================================
 void loop()
 {
-  // flick
+  // flick upon new message
   if (isLedOn && (millis() - ledTurnedOnAt > 100))
   {
     digitalWrite(LED_PIN, LOW);
