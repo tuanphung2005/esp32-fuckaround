@@ -3,8 +3,8 @@
 #include <AsyncTCP.h>
 #include <ESPAsyncWebServer.h>
 
-#include "Config.h"
-#include "WebUI.h"
+#include "config.h"
+#include "webUI.h"
 
 bool isAPMode = false;
 

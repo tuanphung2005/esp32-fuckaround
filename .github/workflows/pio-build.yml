@@ -25,7 +25,7 @@ jobs:
           pip install platformio
 
       # local-chat
-      - name: Run PlatformIO Build cho ChatRoom
+      - name: Run PlatformIO Build for ChatRoom
         working-directory: ./local-chat
         run: pio run
 
